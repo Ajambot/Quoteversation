@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quoteversation</title>
+    <style>
+      /* Custom styles for the outlined hover effect */
+      .btn-outline-success.like:hover {
+        color: #198754 !important; /* Change the color on hover to match the outline color */
+        background-color: transparent !important; /* Set background to transparent on hover */
+        border-color: #198754 !important; /* Change the outline color on hover */
+      }
+
+      /* Active state styles */
+      .btn-outline-success.like.active,
+      .btn-outline-success.like:active {
+        color: #fff !important; /* Change the color when active to match the text color on a white background */
+        background-color: #198754 !important; /* Set background color when active */
+        border-color: #198754 !important; /* Set outline color when active */
+      }
+      .edit {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        vertical-align: top;
+        color: #000;
+        opacity: 75%;
+      }
+
+      .edit:hover {
+        opacity: 100%;
+      }
+
+      .required::after {
+        content:" *" !important;
+        color:red !important;
+      }
+      .btn-circle.btn-xl {
+        width: 60px;
+        height: 60px;
+        padding: 10px 16px;
+        border-radius: 35px;
+        font-size: 26px;
+        line-height: 1.33;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
