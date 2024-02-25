@@ -41,11 +41,10 @@ type UserInfo = {
 }
 
 function App() {
-  const environment = import.meta.env.VITE_NODE_ENV;
-  const api_base = environment=='development'?
-    "http://localhost:" + (import.meta.env.VITE_API_PORT || "5000")
-    :
-    "https://prodUrl:" + (import.meta.env.VITE_API_PORT || "5000");
+  const environment = import.meta.env.PROD;
+  const devUrl = "http://localhost:" + (import.meta.env.VITE_API_PORT || "5000");
+  const prodUrl = "https://api.quoteversation.me"
+  const api_base = environment? prodUrl: devUrl;
   const [postList, setPostList] = useState<Post[]>([]);
   const [isCreating, setIsCreating] = useState(false);
   const [user, setUser] = useState<{uid: string, email: string, username: string } | null>(null);
@@ -229,7 +228,7 @@ function App() {
         form.classList.remove('was-validated');
         form.reset()
       }
-      setErrors((prevErrors) => prevErrors.filter(err => err.type=="general"));
+      setErrors((prevErrors) => prevErrors.filter(err => err.type=="general")); // remove modal errors after closing modal
     }
 
     document.addEventListener('hidden.bs.modal', onModalHide);

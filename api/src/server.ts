@@ -41,8 +41,12 @@ const port = process.env.PORT || 5000;
 const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded());
-const urlOrigin = environment=="development"? 'http://localhost:5173': 'proURL.com:12347';
-app.use(cors({origin: urlOrigin, optionsSuccessStatus: 200, credentials: true}));
+const urlOrigin = environment=="development"? 'http://localhost:5173': ['https://www.quoteversation.me', 'https://quoteversation.me'];
+app.use(cors({
+  origin: urlOrigin,
+  optionsSuccessStatus: 200,
+  credentials: true,
+}));
 
 // Initialize MongoDB
 const uri = environment=="development"? process.env.DEV_ATLAS_URI : process.env.PROD_ATLAS_URI;
@@ -70,6 +74,12 @@ if(!process.env.SECRET) {
   throw new Error("Cannot find secret for session in .env");
 }
 
+// trust nginx reverse proxy
+if(environment=="production"){
+  app.set('trust proxy', 1);
+  app.enable('trust proxy');
+}
+
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -79,7 +89,10 @@ app.use(session({
     ttl: 14 * 24 * 60 * 60, // 2 weeks
     dbName: "metadata",
     collectionName: "sessions"}),
+    proxy: true,
     cookie: {
+      sameSite: environment=="development"? "lax": "none",
+      secure: !(environment=="development"),
       maxAge: 1000 * 60 * 60 * 24 // 1 day
     }
   }))
@@ -119,7 +132,7 @@ interface PostsReqQuery {
   skip?: number;
 }
 
-// posts route
+// fetch posts
 app.get(
   "/posts",
   async (
@@ -200,13 +213,14 @@ app.get(
   }
 );
 
+// create a post
 app.post(
   "/posts",
   isLoggedIn,
   async (req: Request<RequestParams, ResponseBody,
     {
       quote: string,
-      author: { username: string, _id: string}, // need to update this after creating authentication
+      author: { username: string, _id: string},
       source: {
         text: string,
         link: string
@@ -235,27 +249,7 @@ app.post(
     }
 )
 
-// app.get(
-//   "/users/:_id",
-//   async (
-//     req: Request<{ _id: string }, ResponseBody, RequestBody>,
-//     res: Response
-//   ) => {
-//     try {
-//       const user = await users_coll.findOne({
-//         _id: new ObjectId(req.params._id),
-//       });
-//       if(!user) {
-//         return res.status(404).json({ error: 'User could not be found' });
-//       }
-//       res.json({ _id: user._id, username: user.username, email: user.email });
-//     } catch (err) {
-//       console.error(`Error ${err}`);
-//       return res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//   }
-// );
-
+// delete a post
 app.delete(
   "/posts/:_id",
   isLoggedIn,
@@ -285,6 +279,7 @@ app.delete(
   }
 );
 
+// update a post
 app.patch(
   "/posts/:_id",
   isLoggedIn,
@@ -315,7 +310,7 @@ app.patch(
   }
 )
 
-
+// like a post
 app.post(
   "/posts/:_id/like",
   isLoggedIn,
@@ -348,6 +343,8 @@ app.post(
   }
 );
 
+
+// unlike a post
 app.delete(
   "/posts/:_id/like",
   isLoggedIn,
@@ -380,6 +377,7 @@ app.delete(
   }
 );
 
+// register route
 app.post(
   "/register",
   async (req: Request <RequestParams, ResponseBody, {email: string, username: string, password: string}>, res: Response) => {
@@ -408,6 +406,7 @@ app.post(
   }
 )
 
+// login route
 app.post(
   "/login",
   async (req: Request<RequestParams, {usernameOrEmail: string, password: string}>, res: Response) => {
@@ -431,6 +430,7 @@ app.post(
   }
 );
 
+// fetch current session
 app.get("/session", isLoggedIn, async (req: Request, res: Response) => {
   try {
     res.status(200).json({ message: 'User is logged in', content: req.session.user})
@@ -441,6 +441,7 @@ app.get("/session", isLoggedIn, async (req: Request, res: Response) => {
   }
 })
 
+// log out
 app.post("/logout", isLoggedIn, (req: Request, res: Response) => {
   req.session.destroy((err) => {
     if (err) { 
@@ -451,6 +452,7 @@ app.post("/logout", isLoggedIn, (req: Request, res: Response) => {
   });
 });
 
+// listen on specified port
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
