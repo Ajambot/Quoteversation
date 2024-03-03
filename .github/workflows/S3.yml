@@ -16,7 +16,7 @@ jobs:
 
       - name: Build static files
         id: build
-        run: cd client && npm install && npm run build
+        run: npm install && cd client && npm install && npm run build
 
       - name: Sync S3 bucket
         if: steps.build.outcome == 'success'
