@@ -18,8 +18,8 @@ interface Props {
   comments: Array<Comment>;
   source: Source;
   id: string;
-  onLikeClick: (id: string) => Promise<void>;
-  onCloseClick: (id: string) => void;
+  onLikeHandler: (id: string) => Promise<void>;
+  onDeleteHandler: (id: string) => void;
   onUpdateClick: (id: string) => void;
   isAuthor: boolean;
   isLiked: boolean;
@@ -34,8 +34,8 @@ const Post = ({
   //bookmarks,
   //comments,
   source,
-  onLikeClick,
-  onCloseClick,
+  onLikeHandler: onLike,
+  onDeleteHandler: onCloseClick,
   onUpdateClick,
   id,
   isAuthor,
@@ -71,9 +71,9 @@ const Post = ({
         <div>
           <button
             className={"btn btn-outline-success like" + (isLiked ? " active" : "")}
-            onClick={isLoggedIn? () => onLikeClick(id): undefined}
-            data-bs-toggle="modal"
-            data-bs-target= {isLoggedIn? "" : "#notLoggedInModal"}
+            onClick={isLoggedIn? () => onLike(id): undefined}
+            data-bs-toggle={isLoggedIn? undefined : "modal"}
+            data-bs-target= {isLoggedIn? "#" : "#notLoggedInModal"}
           >
             <i className="bi bi-envelope-paper-heart me-2 like"></i>
             {likes}

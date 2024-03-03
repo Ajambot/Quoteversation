@@ -4,12 +4,12 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     children: React.ReactNode;
-    onSubmit: (e: React.SyntheticEvent<HTMLFormElement>) => void;
+    onSubmitHandler: (e: React.SyntheticEvent<HTMLFormElement>) => void;
     onShowClick: (id?: string) => void;
     isLoggedIn: boolean;
 }
 
-const CreatePostModal = ({ children, onSubmit, onShowClick, isLoggedIn }: Props) => {
+const CreatePostModal = ({ children, onSubmitHandler: onSubmit, onShowClick, isLoggedIn }: Props) => {
     return(
     <>
         <button

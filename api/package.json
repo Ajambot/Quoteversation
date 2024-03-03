@@ -5,12 +5,12 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build --clean",
     "start": "node dist/server.js",
     "dev": "concurrently --kill-others \"tsc --watch\" \"nodemon dist/server.js\""
   },
   "author": "Martin Morales",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/express-session": "^1.17.10",

@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 interface Props {
     children: React.ReactNode;
-    onLogin: (e: React.SyntheticEvent<HTMLFormElement>) => void;
-    onRegister: (e: React.SyntheticEvent<HTMLFormElement>) => void;
+    onLoginHandler: (e: React.SyntheticEvent<HTMLFormElement>) => void;
+    onRegisterHandler: (e: React.SyntheticEvent<HTMLFormElement>) => void;
 }
 
-const LogInModal = ({children, onLogin,onRegister}: Props) => {
+const LogInModal = ({children, onLoginHandler,onRegisterHandler: onRegister}: Props) => {
     const [registering, setRegistering] = useState(false);
   return (
     <div className="modal fade" id="logInModal" tabIndex={-1} aria-labelledby="logInModal" aria-hidden="true">
@@ -18,7 +18,7 @@ const LogInModal = ({children, onLogin,onRegister}: Props) => {
                 </div>
                 <div className="modal-body">
                     {children}
-                    <form className='needs-validation' id="logIn" onSubmit={registering? onRegister: onLogin} noValidate>
+                    <form className='needs-validation' id="logIn" onSubmit={registering? onRegister: onLoginHandler} noValidate>
                         {registering?
                             <>
                                 <div className="mb-3">
