@@ -9,8 +9,5 @@
     "api": "cd api && npm run dev",
     "dev": "concurrently \"npm run client\" \"npm run api\"",
     "build": "cd api && npm run build && cd .. && cd client && npm run build"
-  },
-  "dependencies": {
-    "uuid": "^9.0.1"
   }
 }
