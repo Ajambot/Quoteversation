@@ -4,12 +4,12 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     children: React.ReactNode;
-    onSubmit: (e: React.SyntheticEvent<HTMLFormElement>) => void;
+    onSubmitHandler: (e: React.SyntheticEvent<HTMLFormElement>) => void;
     onShowClick: (id?: string) => void;
     isLoggedIn: boolean;
 }
 
-const CreatePostModal = ({ children, onSubmit, onShowClick, isLoggedIn }: Props) => {
+const CreatePostModal = ({ children, onSubmitHandler: onSubmit, onShowClick, isLoggedIn }: Props) => {
     return(
     <>
         <button
@@ -21,16 +21,6 @@ const CreatePostModal = ({ children, onSubmit, onShowClick, isLoggedIn }: Props)
             }}
             ><FontAwesomeIcon icon={faPlus} />
         </button>
-        {/* <button
-            className="btn btn-primary btn-lg position-fixed end-0 bottom-0 m-3"
-            data-bs-toggle="modal"
-            data-bs-target={isLoggedIn? "#createPostModal" : "#notLoggedInModal"}
-            onClick = { () => {
-                onShowClick();
-            }}
-            >
-        Create Post
-        </button> */}
         <div className="modal fade" id="createPostModal" tabIndex={-1} aria-labelledby="createPostModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">

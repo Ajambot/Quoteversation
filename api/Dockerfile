@@ -1,3 +1,5 @@
+ARG PORT=5121
+
 FROM node:20
 
 WORKDIR /app
@@ -8,6 +10,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5121
+EXPOSE ${PORT}
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start" ]

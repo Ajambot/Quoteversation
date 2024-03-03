@@ -1,9 +1,9 @@
 interface Props {
   userData: { uid: string; username: string; email: string } | null;
-  onLogOut: () => void;
+  onLogOutHandler: () => void;
 }
 
-const NavBar = ({ userData, onLogOut }: Props) => {
+const NavBar = ({ userData, onLogOutHandler }: Props) => {
   return (
     <nav className="navbar navbar-expand-lg bg-secondary">
       <div className="container-fluid">
@@ -15,7 +15,7 @@ const NavBar = ({ userData, onLogOut }: Props) => {
             userData?
                 <div>
                     <span className='text-white me-3 mb-0 pt-2 align-middle'>{userData.username}</span>
-                    <button className='btn btn-primary' onClick={onLogOut}>Log Out</button>
+                    <button className='btn btn-primary' onClick={onLogOutHandler}>Log Out</button>
                 </div>
                 :
                 <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#logInModal">Login/Signup</button>
