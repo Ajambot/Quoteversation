@@ -1,8 +1,6 @@
 {
   "devDependencies": {
-    "@types/uuid": "^9.0.8",
-    "concurrently": "^8.2.2",
-    "dotenv": "^16.3.1"
+    "concurrently": "^8.2.2"
   },
   "scripts": {
     "client": "cd client && npm run dev",

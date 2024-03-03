@@ -1,8 +1,7 @@
 import React from "react";
 import { createPost, deletePost, fetchPosts, likeToggle, login, logout, register, updatePost } from "./requestsUtilities.ts";
 import type { AppError, PostType, UserInfo}  from './types.ts';
-import { v4 as uuidv4 } from 'uuid';
-
+import { v4 as uuidv4 } from "uuid";
 
 export const onSearch = (e: React.SyntheticEvent<HTMLFormElement>,
     setErrors: React.Dispatch<React.SetStateAction<AppError[]>>,
